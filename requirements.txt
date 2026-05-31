@@ -1,0 +1,24 @@
+# PyTorch (install the build that matches your CUDA, e.g.:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118)
+torch>=2.1
+torchvision
+
+# Core
+numpy
+opencv-python
+matplotlib
+Pillow
+
+# Unified SAM interface (core/sam backends)
+hydra-core>=1.2
+iopath
+
+# Gated SAM 3 download from the Hugging Face Hub
+huggingface_hub
+
+# Utilities used by the SAM wrapper
+sanghyunjo
+
+# Notebooks
+jupyter
+ipykernel
