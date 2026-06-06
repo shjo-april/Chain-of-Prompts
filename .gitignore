@@ -173,6 +173,9 @@ make_hero_gif.py
 _gen*.py
 _fix_*.py
 
+## work in progress (commit later)
+app.py
+
 *.pt
 *.pth
 *.safetensors

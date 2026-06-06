@@ -22,3 +22,7 @@ sanghyunjo
 # Notebooks
 jupyter
 ipykernel
+
+# Demo (app.py)
+gradio>=4.0
+spaces            # Hugging Face ZeroGPU helper (no-op locally)

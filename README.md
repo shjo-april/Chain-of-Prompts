@@ -227,7 +227,13 @@ authors of every dataset and foundation model we build on.
 
 ## 📜 License
 
-Our code is released under the [Apache 2.0 License](./LICENSE). The vendored SAM model code
-under `core/sam` and the SAM 3 weights are governed by Meta's
-[SAM License](https://ai.meta.com/sam). Datasets follow their original licenses, documented
-in [DATASETS.md](./DATASETS.md).
+This repository is released for **non-commercial academic research only**.
+Any commercial use requires prior written permission. For commercial licensing,
+please contact **both**:
+
+- Sanghyun Jo: shjo.april@gmail.com
+- Kyungsu Kim: kyskim@snu.ac.kr
+
+The vendored Segment Anything model code under `core/sam` and the SAM 3 weights are
+governed by Meta's [SAM License](https://ai.meta.com/sam). Datasets follow their original
+licenses (see [DATASETS.md](./DATASETS.md)).
