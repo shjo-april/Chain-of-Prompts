@@ -7,7 +7,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-gold?style=for-the-badge)](https://shjo-april.github.io/Chain-of-Prompts)
 [![Paper](https://img.shields.io/badge/Paper-PDF-red?style=for-the-badge)](https://arxiv.org/pdf/2605.29429)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.29429-b31b1b?style=for-the-badge)](https://arxiv.org/abs/2605.29429)
-[![License](https://img.shields.io/badge/Code-Apache%202.0-blue?style=for-the-badge)](./LICENSE)
+[![License](https://img.shields.io/badge/License-Research%20Only-8c1b13?style=for-the-badge)](./LICENSE)
 
 [Sanghyun Jo](https://shjo-april.github.io/)<sup>1,2</sup>, Seo Jin Lee<sup>2</sup>, Seohyung Hong<sup>2</sup>, Yoorim Gang<sup>2</sup>, [Hyeongsub Kim](https://sites.google.com/view/hyeongsub/)<sup>2,3</sup>, Hyungseok Seo<sup>2†</sup>, [Kyungsu Kim](https://aibl.snu.ac.kr/team/pi-information)<sup>2†</sup>
 
