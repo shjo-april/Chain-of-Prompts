@@ -7,7 +7,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-gold?style=for-the-badge)](https://shjo-april.github.io/Chain-of-Prompts)
 [![Paper](https://img.shields.io/badge/Paper-PDF-red?style=for-the-badge)](https://arxiv.org/pdf/2605.29429)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.29429-b31b1b?style=for-the-badge)](https://arxiv.org/abs/2605.29429)
-[![License](https://img.shields.io/badge/License-Research%20Only-8c1b13?style=for-the-badge)](./LICENSE)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-8c1b13?style=for-the-badge)](./LICENSE)
 
 [Sanghyun Jo](https://shjo-april.github.io/)<sup>1,2</sup>, Seo Jin Lee<sup>2</sup>, Seohyung Hong<sup>2</sup>, Yoorim Gang<sup>2</sup>, [Hyeongsub Kim](https://sites.google.com/view/hyeongsub/)<sup>2,3</sup>, Hyungseok Seo<sup>2†</sup>, [Kyungsu Kim](https://aibl.snu.ac.kr/team/pi-information)<sup>2†</sup>
 
@@ -227,9 +227,10 @@ authors of every dataset and foundation model we build on.
 
 ## 📜 License
 
-This repository is released for **non-commercial academic research only**.
-Any commercial use requires prior written permission. For commercial licensing,
-please contact **both**:
+Our first-party code is released under [**CC BY-NC 4.0**](https://creativecommons.org/licenses/by-nc/4.0/)
+(Creative Commons Attribution-NonCommercial 4.0): free for **non-commercial academic
+research and education** with attribution. Any commercial use requires prior written
+permission. For commercial licensing, please contact **both**:
 
 - Sanghyun Jo: shjo.april@gmail.com
 - Kyungsu Kim: kyskim@snu.ac.kr
