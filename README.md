@@ -2,7 +2,7 @@
 
 # One Click per Cell Type Suffices: Training-free Group Interaction for Cell Instance Segmentation
 
-**Method: Chain-of-Prompts (CoP)** &nbsp;|&nbsp; ⭐ MICCAI 2026 Early Accept (Top 9%)
+**Method: Chain-of-Prompts (CoP)** &nbsp;|&nbsp; 📝 Under Review
 
 [![Project Page](https://img.shields.io/badge/Project-Page-gold?style=for-the-badge)](https://shjo-april.github.io/Chain-of-Prompts)
 [![Paper](https://img.shields.io/badge/Paper-PDF-red?style=for-the-badge)](https://arxiv.org/pdf/2605.29429)
@@ -216,12 +216,12 @@ authors of every dataset and foundation model we build on.
 ## 📖 Citation
 
 ```bibtex
-@inproceedings{jo2026cop,
+@article{jo2026cop,
   title     = {One Click per Cell Type Suffices: Training-free Group Interaction for Cell Instance Segmentation},
   author    = {Jo, Sanghyun and Lee, Seo Jin and Hong, Seohyung and Gang, Yoorim and Kim, Hyeongsub and Seo, Hyungseok and Kim, Kyungsu},
-  booktitle = {International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI)},
+  journal   = {arXiv preprint arXiv:2605.29429},
   year      = {2026},
-  note      = {Early Accept (Top 9\%)}
+  note      = {Under review}
 }
 ```
 
