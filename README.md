@@ -18,12 +18,12 @@
 ---
 
 > **This is the demo release.** It contains the training-free inference core, the unified
-> SAM interface, two reproduction notebooks, and the benchmark test splits. Evaluation 
+> SAM interface, a demo notebook, and the benchmark test splits. Evaluation
 > will be added incrementally. Please ⭐ star and 👁️ watch for updates.
 
 <div align="center">
   <img src="./assets/hero.gif" width="100%">
-  <br><em>Group Prompting (SAM3 + CoP) segments every cell in 3 clicks; per-instance prompting (SAM3) keeps clicking to 245.</em>
+  <br><em>Group Prompting (SAM 3 + CoP) segments every cell in 3 clicks; per-instance prompting (SAM 3) keeps clicking to 245.</em>
 </div>
 
 ## 💡 TL;DR
@@ -31,88 +31,111 @@
 Cell-specific models break on unseen cell types, and interactive foundation models such as
 SAM 3 need one click per cell. **Chain-of-Prompts (CoP)** turns a **single click per cell
 type** into every same-type instance, shifting interaction from per-instance **O(N)** to
-per-type **O(T)**. With **3 clicks instead of 245 (81.7× fewer)**, CoP keeps **92.7% of the
-per-instance upper bound**, fully training-free.
+per-type **O(T)**, fully training-free. Across **eleven benchmarks** it retains **over 90%**
+of the per-instance upper bound while cutting annotation clicks by **97.6%** on average
+(**42.5× fewer**). On the CoNSeP example below, **3 clicks replace 245** (81.7× fewer) at
+**93.9%** of the upper bound.
 
 <div align="center">
   <img src="./assets/teaser.png" width="100%">
-  <br><em>Figure 1. Cell-specific models miss unseen cell types and interactive models need one click per cell; CoP needs only one click per cell type.</em>
+  <br><em>Figure 1. Pretrained cell-specific models fail on unseen cell types (dashed boxes) and interactive models need one click per cell; CoP needs only one click per cell type.</em>
 </div>
-
-## ✨ Key Features
-
-- **Group Prompting, O(N) → O(T).** One click per cell type, not per cell. Robust to
-  out-of-distribution cell types with no cell-specific training.
-- **Training-free core (`core/cop.py`).** Two ideas, no backprop:
-  - **HSG** (Hierarchical Similarity Gating): gates a frozen encoder's high and low
-    resolution features, thresholds at μ+σ, and extracts reliable same-type points.
-  - **FPR** (Farthest Prompt Recursion): re-prompts the farthest uncovered point until
-    coverage converges, then decodes each point with the frozen mask decoder (guard + NMS).
-
-    The public core is compact and maps one to one to the paper. It carries **no
-    evaluation, metric, or plotting code**, so the method itself is easy to read and reuse.
-- **Unified SAM interface (`core/sam`).** A single `ImageSAM(checkpoint, backend)` (and
-  `VideoSAM`) API across the SAM family used in the paper: **SAM1-H**, **μSAM (micro-SAM)**,
-  **SAM 2.1**, and **SAM 3**, plus HQ-SAM, ZIM, and EdgeTAM. Frozen multi-scale encoder
-  features are exposed through `encode_image()`, which is exactly what CoP consumes. The
-  same interface drives every SAM-family baseline reported in the paper, so swapping a
-  backbone is a one-line change.
-- **Reproducible.** [`reproduce_figure2.ipynb`](./reproduce_figure2.ipynb) rebuilds the
-  paper's Figure 2 (O(T) vs. O(N) and the AJI curve); [`demo.ipynb`](./demo.ipynb) is an
-  image-only minimal run. Benchmark test splits ship with the repo (see
-  [Datasets](#-datasets)).
-
-## 🔍 Method
-
-<div align="center">
-  <img src="./assets/method_overview.png" width="100%">
-</div>
-
-A frozen SAM encoder is run **once** per image. **HSG** turns each click into a reliable
-point set via hierarchical similarity gating and connected-component labeling. **FPR** then
-iteratively re-prompts the farthest uncovered point until no new cells appear, and the
-converged set is decoded into instance masks with non-maximum suppression at IoU > 0.5.
-
-## 📊 Results
-
-CoP is training-free and adds no parameters to the frozen backbone. Numbers below are the
-AJI on each test split (see the figures for Dice and the full set of baselines).
 
 <div align="center">
   <img src="./assets/figure2.png" width="100%">
-  <br><em>Figure 2. Group Prompting (O(T)) vs. per-instance prompting (O(N)) on CoNSeP/test_2, with the AJI vs. number of prompts curve.</em>
+  <br><em>Figure 2. From 245 clicks to 3. Manual per-instance prompting O(N) vs. CoP group prompting O(T) on CoNSeP/test_2, with the AJI-vs-#prompts curve: CoP reaches <b>93.9%</b> of the per-instance upper bound with <b>81.7× fewer prompts</b>.</em>
 </div>
 
-### Cell-type-annotated benchmarks (one click per cell type)
+## 📊 Results
 
-A single click per cell type retains over **90%** of the per-instance upper bound and
-**surpasses fully-supervised methods that require complete masks**, with no training. The
-table reports five prompt regimes (text 𝒯, visual 𝒱, mask ℳ, per-instance points 𝒫ₙ,
-per-type points 𝒫ₜ) across CoNIC, CoNSeP, and GlaS:
+CoP is training-free and adds no parameters to the frozen backbone. It is evaluated on
+**eleven benchmarks** on their official test splits, in three groups. Numbers below are AJI
+(see the tables for Dice and the full baseline set).
+
+### One click per cell type: H&E, cell-type-annotated
+
+A single click per cell type (𝒫ₜ) keeps **over 90%** of SAM 3's per-instance upper bound on
+all three datasets (e.g., **0.731 vs. 0.801** AJI on CoNIC) and **surpasses every
+fully-supervised and open-vocabulary baseline**, with no training. The table spans six
+regimes: text (𝒯), visual (𝒱), unsupervised (✗), mask supervision (ℳ), per-instance points
+(𝒫ₙ), and per-type points (𝒫ₜ) across **CoNIC, CoNSeP, and PanNuke**.
 
 <div align="center">
   <img src="./assets/table_typed.png" width="100%">
 </div>
 
-### Morphologically homogeneous benchmarks (a single click)
+### One click per image: H&E, untyped
 
-When the cells in an image share morphology, one click segments them all, keeping over
-**99%** of the per-instance backbone (μSAM and SAM 3):
+When cells are morphologically homogeneous they act as a single type, so one click per image
+propagates to the whole field: CoP retains **98–99%** of the per-instance upper bound for both
+μSAM and SAM 3, still outperforming every fully-supervised baseline, on **MoNuSeg, TNBC,
+CryoNuSeg, and CPM-17**.
 
 <div align="center">
-  <img src="./assets/table_homog.png" width="100%">
+  <img src="./assets/table_he_untyped.png" width="100%">
 </div>
 
-### Why it works
+### One click per image: non-H&E, untyped
+
+Under a staining-modality shift, H&E-trained supervised models collapse (CellViT drops from
+**0.676** AJI on MoNuSeg to **0.002** on CellBinDB), while CoP, reading only the frozen
+encoder's features, preserves **over 95%** of the per-instance upper bound on all four
+non-H&E benchmarks: **CellBinDB, Cellpose, Kromp, and LIVECell**.
 
 <div align="center">
-  <!-- <img src="./assets/qualitative.png" width="100%"> -->
+  <img src="./assets/table_non-he_untyped.png" width="100%">
+</div>
+
+### Qualitative Comparison
+
+<div align="center">
+  <img src="./assets/qualitative.png" width="100%">
+  <br><em>Figure 4. Fully-supervised baselines miss cell populations outside their training distribution and collapse to near-empty masks under a modality change (dashed boxes); CoP recovers the missing instances from one click per type, or per image when types are unlabeled.</em>
+</div>
+
+## 🔍 How It Works
+
+<div align="center">
+  <img src="./assets/method_overview.png" width="100%">
+</div>
+
+A frozen SAM encoder is run **once** per image, producing a high-resolution feature map
+𝐹ₕ and a low-resolution feature map 𝐹ₗ. For each user click, CoP applies two
+training-free steps with no backprop:
+
+- **HSG (Hierarchical Similarity Gating).** Gates the two scales via the element-wise product
+  𝑆ₕ ⊙ 𝑆ₗ (𝐹ₕ localizes densely while 𝐹ₗ isolates the cell type), thresholds the
+  gated map non-parametrically at **τ = μ + σ**, and runs connected-component labeling to
+  extract a set of reliable same-type points (**precision > 96%** at every iteration).
+- **FPR (Farthest Prompt Recursion).** Re-prompts the reliable point farthest (in image space)
+  from all previous clicks, feeds it back into HSG, and repeats until no new points appear.
+
+The converged point set is decoded into instance masks by the frozen mask decoder
+(overlap guard + NMS at IoU > 0.5).
+
+<div align="center">
   <img src="./assets/umap.png" width="100%">
+  <br><em>Figure 5. UMAP of the frozen SAM encoder's features at GT cell centroids (CoNSeP/test_2). 𝐹ₕ mixes cell types, while 𝐹ₗ already groups same-type cells, before any prompt and without training.</em>
 </div>
 
-CoP recovers cell populations that supervised models drop (red boxes), because the frozen
-SAM encoder already clusters same-type cells in feature space before any prompt is given
-(UMAP): grouping needs the right propagation rule, not fine-tuning.
+The frozen SAM encoder already clusters same-type cells in feature space before any prompt is
+given, so grouping needs the right propagation rule, not fine-tuning. This structure comes
+from SAM's prompt–mask pretraining, not encoder scale: swapping in DINOv3, EVA-CLIP, or SDXL
+features drops CoP to ≤ 0.435 AJI on CoNIC (vs. 0.731 with SAM 3).
+
+## 📦 What's in This Release
+
+- **Training-free core (`core/cop.py`).** HSG + FPR + decoding: the entire method in one
+  compact file that maps one to one to the paper. It carries **no evaluation, metric, or
+  plotting code**, so the method itself is easy to read and reuse.
+- **Unified SAM interface (`core/sam`).** A single `ImageSAM(checkpoint, backend)` (and
+  `VideoSAM`) API across the SAM family used in the paper: **SAM1-H**, **μSAM (micro-SAM)**,
+  **SAM 2.1**, and **SAM 3**, plus HQ-SAM, ZIM, and EdgeTAM. Frozen multi-scale encoder
+  features are exposed through `encode_image()`, which is exactly what CoP consumes, so
+  swapping a backbone is a one-line change.
+- **Runnable demo.** [`demo.ipynb`](./demo.ipynb) is an image-only minimal run of CoP on a
+  single image.
+- **Benchmark test splits** ship in a unified layout (see [Datasets](#-datasets)).
 
 ## 🗂️ Repository Structure
 
@@ -128,10 +151,10 @@ Chain-of-Prompts/
 │       └── modeling/          #   sam1 / sam2 / sam3 / zim model code
 ├── examples/                  # demo image + Figure 2 reference data
 ├── assets/                    # paper figures
-├── reproduce_figure2.ipynb    # rebuilds Figure 2 (O(T) vs. O(N) + AJI curve)
 ├── demo.ipynb                 # image-only minimal demo
-├── data/                      # test splits, cell-type-annotated (see DATASETS.md)
-├── data_wo_type/              # test splits, morphologically homogeneous
+├── data_H@E_typed/            # H&E, cell-type-annotated (CoNIC, CoNSeP, PanNuke)
+├── data_H@E_untyped/          # H&E, untyped (MoNuSeg, TNBC, CryoNuSeg, CPM-17)
+├── data_non-H@E_untyped/      # non-H&E microscopy (CellBinDB, Cellpose, Kromp, LIVECell)
 ├── requirements.txt
 └── DATASETS.md                # dataset licenses and attributions
 ```
@@ -182,28 +205,43 @@ print(info["num_instances"], "cells from", info["num_clicks"], "clicks")
 ```
 
 - [`demo.ipynb`](./demo.ipynb): one click per cell type, round by round, on a single image.
-- [`reproduce_figure2.ipynb`](./reproduce_figure2.ipynb): the full Figure 2 reproduction.
 
 ## 📁 Datasets
 
-The **test split** of each included benchmark is provided, reorganized into a unified layout. Within
-a dataset the three subfolders share one filename per example: `image` is the H&E crop,
-`mask` is the instance label map, and `mask_semantic` (cell-type benchmarks only) is the
-per-cell-type label map.
+CoP is evaluated on **eleven benchmarks** on their official test splits, reorganized into a
+single unified layout and grouped along two axes: **staining** (H&E vs. non-H&E) and
+**type annotation** (typed vs. untyped):
 
 ```
-data/                                          # cell-type-annotated
-└── GlaS/test/{image, mask, mask_semantic}     #   12 images   (.png)
+data_H@E_typed/                                          # H&E, cell-type-annotated  (one click per type)
+├── CoNIC/test/{image, mask_instance, mask_semantic}     #   4,980 images · 256×256      · 6 types
+├── CoNSeP/test/{image, mask_instance, mask_semantic}    #      14 images · 1000×1000    · 7 types
+└── PanNuke/Fold3/{image, mask_instance, mask_semantic}  #   2,722 images · 256×256      · 5 types  (eval split = Fold3)
 
-data_wo_type/                                  # morphologically homogeneous (no type labels)
-├── MoNuSeg/test/{image, mask}                 #   14 images   (.tif)
-├── TNBC/test/{image, mask}                    #   10 images   (.png)
-└── CryoNuSeg/test/{image, mask}               #   10 images   (.tif)
+data_H@E_untyped/                                        # H&E, untyped  (one click per image)
+├── MoNuSeg/test/{image, mask_instance}                  #      14 images · 1000×1000
+├── TNBC/test/{image, mask_instance}                     #      10 images · 512×512
+├── CryoNuSeg/test/{image, mask_instance}                #      10 images · 512×512
+└── CPM-17/test/{image, mask_instance}                   #      32 images · 500–600 px
+
+data_non-H@E_untyped/                                    # non-H&E microscopy, untyped  (one click per image)
+├── CellBinDB/test/{image, mask_instance}                #     303 images · 256×256      (DAPI subset)
+├── Cellpose/test/{image, mask_instance}                 #      68 images · 135–576 px
+├── Kromp/test/{image, mask_instance}                    #      37 images · 430–1024 px
+└── LIVECell/test/{image, mask_instance}                 #   1,512 images · 520×704       (label-free phase-contrast)
 ```
 
-GlaS, MoNuSeg, TNBC, and CryoNuSeg are included. **CoNIC** (large, about 700 MB), **CoNSeP**,
-and **CPM-17** are not shipped (size, or missing or unclear license); please download them
-from the original sources. All source links and license details are in
+Within a dataset the subfolders share one filename per example: `image` is the input crop,
+`mask_instance` is the instance label map (instance id encoded as B·256 + G, gap-free, decoded
+by unique RGB color), and `mask_semantic` (typed datasets only) is the per-cell-type label map
+(0 = background, 1..T). Together the eleven test splits total **9,702 images**.
+
+Only data we are licensed to redistribute is published here: **full** test splits of **MoNuSeg,
+TNBC, CryoNuSeg, and Cellpose**; a **1-image format sample** of **CoNIC, PanNuke, and LIVECell**
+(redistributable but large); and **folder structure only** for **CoNSeP, CPM-17, CellBinDB, and
+Kromp**, which have no clear redistribution license. Download the missing splits from their
+sources and drop them into the matching folders (each carries a `PLACE_FILES_HERE.txt`
+placeholder). Full source links, licenses, and per-dataset statistics are in
 [DATASETS.md](./DATASETS.md).
 
 ## 🙏 Acknowledgements

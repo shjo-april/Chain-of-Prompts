@@ -176,6 +176,9 @@ _fix_*.py
 ## work in progress (commit later)
 app.py
 
+## figure-2 reproduction notebook (not shipped)
+reproduce_figure2.ipynb
+
 *.pt
 *.pth
 *.safetensors

@@ -1,0 +1,7 @@
+This folder is intentionally kept empty in the repository.
+
+The dataset it belongs to is NOT redistributed here because its license does not clearly
+permit redistribution (see DATASETS.md for the source URL and license status). Download the
+dataset from its official source and place the files in this folder, preserving the same
+layout (image / mask_instance / mask_semantic). This placeholder only exists so that git
+tracks the empty folder structure; you may delete it after adding the real data.
