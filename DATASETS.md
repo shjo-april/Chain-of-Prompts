@@ -38,9 +38,8 @@ DAPI subset (303 images)** and refers to it simply as CellBinDB.
 
 ## What is included in this repository
 
-Only data we are licensed to redistribute is published here. Everything else is shipped as an
-**empty folder structure** (each leaf carries a `PLACE_FILES_HERE.txt` placeholder so git keeps
-the folders) together with the official download link, following the
+Only data we are licensed to redistribute is published here; datasets without a clear
+redistribution license are not shipped at all (no files, no folders), following the
 [COIN](https://github.com/shjo-april/COIN) policy.
 
 - **Full test split** (redistributable license, small enough to host): **MoNuSeg, TNBC,
@@ -48,8 +47,8 @@ the folders) together with the official download link, following the
 - **Format sample, 1 image** (redistributable license, full split omitted only for repository
   size): **CoNIC, PanNuke, LIVECell**. The full splits are redistributable; download them from
   the source to reproduce the numbers.
-- **Folder structure only, no data** (no clear redistribution license): **CoNSeP, CPM-17,
-  CellBinDB, Kromp**. Download each from its source and drop the files into the prepared folders.
+- **Not shipped** (no clear redistribution license): **CoNSeP, CPM-17, CellBinDB, Kromp**.
+  Download each from its official source and recreate the layout shown above.
 
 Reproducing the reported metrics requires the full evaluation split of every dataset, obtained
 from its official source (tables below).
@@ -89,15 +88,15 @@ the inclusion policy above.
 | Dataset | Source | License | In repo |
 |---|---|---|---|
 | CoNIC | https://conic-challenge.grand-challenge.org/ | CC BY-NC-SA 4.0 (built on Lizard) | sample (1 image) |
-| CoNSeP | https://warwick.ac.uk/fac/cross_fac/tia/data/hovernet/ | none stated | structure only |
+| CoNSeP | https://warwick.ac.uk/fac/cross_fac/tia/data/hovernet/ | none stated | not shipped |
 | PanNuke | https://warwick.ac.uk/fac/cross_fac/tia/data/pannuke/ | CC BY-NC-SA 4.0 | sample (1 image) |
 | MoNuSeg | https://monuseg.grand-challenge.org/ | CC BY-NC-SA 4.0 | full |
 | TNBC | https://zenodo.org/record/2579118 | CC BY 4.0 | full |
 | CryoNuSeg | https://github.com/masih4/CryoNuSeg | CC BY-NC-SA 4.0 | full |
-| CPM-17 | https://drive.google.com/drive/folders/1sJ4nmkif6j4s2FOGj8j6i_Ye7z9w0TfA | not specified | structure only |
-| CellBinDB (DAPI) | https://doi.org/10.1093/gigascience/giaf069 | no clear redistribution license | structure only |
+| CPM-17 | https://drive.google.com/drive/folders/1sJ4nmkif6j4s2FOGj8j6i_Ye7z9w0TfA | not specified | not shipped |
+| CellBinDB (DAPI) | https://doi.org/10.1093/gigascience/giaf069 | no clear redistribution license | not shipped |
 | Cellpose | https://www.cellpose.org/ | CC BY-NC | full |
-| Kromp | https://github.com/perlfloccri/NuclearSegmentationPipeline | code MIT; dataset license not stated | structure only |
+| Kromp | https://github.com/perlfloccri/NuclearSegmentationPipeline | code MIT; dataset license not stated | not shipped |
 | LIVECell | https://sartorius-research.github.io/LIVECell/ | CC BY-NC 4.0 | sample (1 image) |
 
 ## Cell types (typed datasets)
@@ -113,6 +112,7 @@ the inclusion policy above.
 
 Each redistributed dataset is shared only under its original license and with attribution to
 the source authors. Where a dataset has no clear or redistributable license (CoNSeP, CPM-17,
-CellBinDB, Kromp), we do not redistribute it and ship only the empty folder structure with the
-official download link. Review the original terms before use and cite the original works in any
-publication. For licensing or ethical concerns, contact the original dataset creators.
+CellBinDB, Kromp), we do not redistribute it and keep no files or folders for it in the repo;
+download it from the official source. Review the original terms before use and cite the original
+works in any publication. For licensing or ethical concerns, contact the original dataset
+creators.

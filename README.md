@@ -237,11 +237,10 @@ by unique RGB color), and `mask_semantic` (typed datasets only) is the per-cell-
 (0 = background, 1..T). Together the eleven test splits total **9,702 images**.
 
 Only data we are licensed to redistribute is published here: **full** test splits of **MoNuSeg,
-TNBC, CryoNuSeg, and Cellpose**; a **1-image format sample** of **CoNIC, PanNuke, and LIVECell**
-(redistributable but large); and **folder structure only** for **CoNSeP, CPM-17, CellBinDB, and
-Kromp**, which have no clear redistribution license. Download the missing splits from their
-sources and drop them into the matching folders (each carries a `PLACE_FILES_HERE.txt`
-placeholder). Full source links, licenses, and per-dataset statistics are in
+TNBC, CryoNuSeg, and Cellpose**, and a **1-image format sample** of **CoNIC, PanNuke, and
+LIVECell** (redistributable but large). The datasets with no clear redistribution license
+(**CoNSeP, CPM-17, CellBinDB, Kromp**) are **not shipped**; download them from their official
+sources and recreate the layout. Full source links, licenses, and per-dataset statistics are in
 [DATASETS.md](./DATASETS.md).
 
 ## 🙏 Acknowledgements
@@ -258,8 +257,7 @@ authors of every dataset and foundation model we build on.
   title     = {One Click per Cell Type Suffices: Training-free Group Interaction for Cell Instance Segmentation},
   author    = {Jo, Sanghyun and Lee, Seo Jin and Hong, Seohyung and Gang, Yoorim and Kim, Hyeongsub and Seo, Hyungseok and Kim, Kyungsu},
   journal   = {arXiv preprint arXiv:2605.29429},
-  year      = {2026},
-  note      = {Under review}
+  year      = {2026}
 }
 ```
 
