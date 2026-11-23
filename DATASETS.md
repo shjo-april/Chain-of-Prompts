@@ -46,7 +46,8 @@ redistribution license are not shipped at all (no files, no folders), following 
   CryoNuSeg, Cellpose**.
 - **Format sample, 1 image** (redistributable license, full split omitted only for repository
   size): **CoNIC, PanNuke, LIVECell**. The full splits are redistributable; download them from
-  the source to reproduce the numbers.
+  the source to reproduce the numbers. LIVECell also ships the image used in the hero GIF
+  (`SKOV3_Phase_F4_1_01d00h00m_3`).
 - **Not shipped** (no clear redistribution license): **CoNSeP, CPM-17, CellBinDB, Kromp**.
   Download each from its official source and recreate the layout shown above.
 
@@ -97,7 +98,7 @@ the inclusion policy above.
 | CellBinDB (DAPI) | https://doi.org/10.1093/gigascience/giaf069 | no clear redistribution license | not shipped |
 | Cellpose | https://www.cellpose.org/ | CC BY-NC | full |
 | Kromp | https://github.com/perlfloccri/NuclearSegmentationPipeline | code MIT; dataset license not stated | not shipped |
-| LIVECell | https://sartorius-research.github.io/LIVECell/ | CC BY-NC 4.0 | sample (1 image) |
+| LIVECell | https://sartorius-research.github.io/LIVECell/ | CC BY-NC 4.0 | sample (1 image) + hero GIF image |
 
 ## Cell types (typed datasets)
 

@@ -2,20 +2,33 @@
 
 # One Click per Cell Type Suffices: Training-free Group Interaction for Cell Instance Segmentation
 
-**Method: Chain-of-Prompts (CoP)** &nbsp;|&nbsp; 📝 Under Review
+### [ACCV'26 [Oral](https://accv2026.org/conference-program/#oral-8) | NeurIPSW'26 [Spotlight](https://asci.artificialintelligencepathology.org/)]
+
+**Method: Chain-of-Prompts (CoP)**
 
 [![Project Page](https://img.shields.io/badge/Project-Page-gold?style=for-the-badge)](https://shjo-april.github.io/Chain-of-Prompts)
 [![Paper](https://img.shields.io/badge/Paper-PDF-red?style=for-the-badge)](https://arxiv.org/pdf/2605.29429)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.29429-b31b1b?style=for-the-badge)](https://arxiv.org/abs/2605.29429)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-8c1b13?style=for-the-badge)](./LICENSE)
 
-[Sanghyun Jo](https://shjo-april.github.io/)<sup>1,2</sup>, Seo Jin Lee<sup>2</sup>, Seohyung Hong<sup>2</sup>, Yoorim Gang<sup>2</sup>, [Hyeongsub Kim](https://sites.google.com/view/hyeongsub/)<sup>2,3</sup>, Hyungseok Seo<sup>2†</sup>, [Kyungsu Kim](https://aibl.snu.ac.kr/team/pi-information)<sup>2†</sup>
+[Sanghyun Jo](https://shjo-april.github.io/)<sup>1,2</sup>, Seo Jin Lee<sup>1</sup>, Seohyung Hong<sup>1</sup>, Yoorim Gang<sup>1</sup>, [Hyeongsub Kim](https://sites.google.com/view/hyeongsub/)<sup>1,3</sup>, Hyungseok Seo<sup>1†</sup>, [Kyungsu Kim](https://aibl.snu.ac.kr/team/pi-information)<sup>1†</sup>
 
-<sup>1</sup>OGQ &nbsp; <sup>2</sup>Seoul National University &nbsp; <sup>3</sup>LG CNS &nbsp; <sup>†</sup>Corresponding authors
+<sup>1</sup>Seoul National University &nbsp; <sup>2</sup>OGQ &nbsp; <sup>3</sup>LG CNS &nbsp; <sup>†</sup>Corresponding authors
 
 </div>
 
 ---
+
+> **Oral at ACCV 2026.** Accepted at ACCV 2026 (Asian Conference on Computer Vision) as an
+> **Oral** presentation: one of **36 oral papers** among 378 accepted, an estimated top 3% of
+> submissions ([Oral Session 8: Segmentation & Medical Imaging](https://accv2026.org/conference-program/#oral-8)).
+> ACCV 2026 has not published its submission count; the estimate comes from paper IDs running
+> up to 1417 (36 / 1417 ≈ 2.5%).
+>
+> **Spotlight at NeurIPS 2026 Workshop ASCI.** The same paper was also selected as one of 10
+> **Spotlight** talks at NeurIPS 2026 Workshop ASCI ([AI at Scale for Clinical Impact: Cancer Pathology Foundation Models](https://asci.artificialintelligencepathology.org/)).
+> The workshop version is **non-archival**: it is not included in the workshop proceedings, so
+> please cite the ACCV 2026 paper.
 
 > **This is the demo release.** It contains the training-free inference core, the unified
 > SAM interface, a demo notebook, and the benchmark test splits. Evaluation
@@ -23,7 +36,7 @@
 
 <div align="center">
   <img src="./assets/hero.gif" width="100%">
-  <br><em>Group Prompting (SAM 3 + CoP) segments every cell in 3 clicks; per-instance prompting (SAM 3) keeps clicking to 245.</em>
+  <br><em>The same clicks with and without CoP, on an H&E image (CoNSeP) and a label-free phase-contrast image (LIVECell). SAM 3 alone segments only the clicked cells (AJI 0.009 and 0.004), while CoP reaches AJI 0.451 and 0.699 from the same 3 clicks and 1 click. Clicking every cell takes 245 and 87 clicks to reach 0.499 and 0.748. <a href="#-reproducing-the-hero-gif">Reproduce this GIF.</a></em>
 </div>
 
 ## 💡 TL;DR
@@ -135,6 +148,8 @@ features drops CoP to ≤ 0.435 AJI on CoNIC (vs. 0.731 with SAM 3).
   swapping a backbone is a one-line change.
 - **Runnable demo.** [`demo.ipynb`](./demo.ipynb) is an image-only minimal run of CoP on a
   single image.
+- **Reproducible hero GIF (`hero_gif/`).** The two scripts and the recorded runs behind the GIF
+  at the top (see [Reproducing the Hero GIF](#-reproducing-the-hero-gif)).
 - **Benchmark test splits** ship in a unified layout (see [Datasets](#-datasets)).
 
 ## 🗂️ Repository Structure
@@ -150,7 +165,8 @@ Chain-of-Prompts/
 │       ├── configs/           #   model configs
 │       └── modeling/          #   sam1 / sam2 / sam3 / zim model code
 ├── examples/                  # demo image + Figure 2 reference data
-├── assets/                    # paper figures
+├── assets/                    # paper figures + hero GIF
+├── hero_gif/                  # scripts + recorded runs that reproduce assets/hero.gif
 ├── demo.ipynb                 # image-only minimal demo
 ├── data_H@E_typed/            # H&E, cell-type-annotated (CoNIC, CoNSeP, PanNuke)
 ├── data_H@E_untyped/          # H&E, untyped (MoNuSeg, TNBC, CryoNuSeg, CPM-17)
@@ -206,6 +222,51 @@ print(info["num_instances"], "cells from", info["num_clicks"], "clicks")
 
 - [`demo.ipynb`](./demo.ipynb): one click per cell type, round by round, on a single image.
 
+## 🎬 Reproducing the Hero GIF
+
+The GIF at the top is drawn from real runs: every mask, click, and AJI value in it comes from the
+recorded outputs in [`hero_gif/results`](./hero_gif/results). It is built in two steps.
+
+```bash
+python hero_gif/build_gif.py                               # CPU: recorded runs -> assets/hero.gif
+python hero_gif/run_models.py --ckpt ./checkpoints/sam3    # GPU: rerun both scenes -> outputs/hero_gif
+```
+
+- [`build_gif.py`](./hero_gif/build_gif.py) composes the frames from
+  [`scenes.json`](./hero_gif/scenes.json) (images, clicks, captions) and the recorded runs, with
+  no model. With the Segoe UI of Windows 10 and Pillow 11.3.0 it reproduces `assets/hero.gif`
+  byte for byte. Without Segoe UI it falls back to DejaVu Sans: same layout, different glyphs.
+- [`run_models.py`](./hero_gif/run_models.py) reruns SAM 3 on both scenes and reports whether the
+  recorded run is reproduced exactly. Per scene it runs CoP from the scene's clicks, the same
+  clicks without CoP, and per-cell clicking (the same clicks first, then the centroid of every
+  other ground-truth cell in id order), scoring the exact AJI as the clicks accumulate. Pass
+  `--out hero_gif/results` to build the GIF from your own run.
+
+| Scene | Cells | Clicks | Same clicks, w/o CoP | w/ CoP | Every cell clicked, w/o CoP | Clicks for w/o CoP to match |
+|---|--:|--:|--:|--:|--:|--:|
+| H&E: CoNSeP `test_2` | 245 | 3 | 0.009 | **0.451** | 0.499 (245 clicks) | 212 |
+| Non-H&E: LIVECell `SKOV3_Phase_F4_1_01d00h00m_3` | 87 | 1 | 0.004 | **0.699** | 0.748 (87 clicks) | 82 |
+
+Values are AJI against the ground truth for one recorded run per image. They are not benchmark
+averages (see [Results](#-results)), and for CoNSeP `test_2` they are not the numbers of Figure 2,
+which comes from the paper's own run of the same image and clicks.
+
+- **Ground truth.** The LIVECell pair ships in `data_non-H@E_untyped/LIVECell/test/`. CoNSeP is
+  not redistributable, so `run_models.py` needs its instance mask at the path given in
+  `scenes.json` (`build_gif.py` does not).
+- **Click order.** A mask that overlaps two or more existing cells is rejected, so per-cell
+  clicking depends on the order of the clicks. The GIF fixes it to the ground-truth id order.
+- **LIVECell click.** The click follows the paper's rule (a random reliable cell) at seed 3,
+  which lands on a central cell. Seeds 0 to 9 give AJI 0.44 to 0.72 (mean 0.63); their clicks are
+  the `seed_clicks` of `scenes.json`.
+- **Environment.** The recorded run used PyTorch 2.8.0 (CUDA 12.8). Results on a single image
+  vary with the numerical environment (PyTorch, CUDA, GPU), because the propagated points are
+  not identical across machines. The same script on another GPU with PyTorch 2.7.0 (CUDA 11.8)
+  gave AJI 0.4505 w/ CoP and 0.5058 with every cell clicked on CoNSeP (recorded: 0.4508 and
+  0.4987), 0.6600 and 0.7508 on LIVECell (recorded: 0.6993 and 0.7477), and 0.47 to 0.72
+  (mean 0.66) over the ten seed clicks. `run_models.py` lists what differs from the recorded
+  run, and the committed GIF always shows the recorded one.
+
 ## 📁 Datasets
 
 CoP is evaluated on **eleven benchmarks** on their official test splits, reorganized into a
@@ -238,7 +299,8 @@ by unique RGB color), and `mask_semantic` (typed datasets only) is the per-cell-
 
 Only data we are licensed to redistribute is published here: **full** test splits of **MoNuSeg,
 TNBC, CryoNuSeg, and Cellpose**, and a **1-image format sample** of **CoNIC, PanNuke, and
-LIVECell** (redistributable but large). The datasets with no clear redistribution license
+LIVECell** (redistributable but large; LIVECell also ships the image used in the hero GIF). The
+datasets with no clear redistribution license
 (**CoNSeP, CPM-17, CellBinDB, Kromp**) are **not shipped**; download them from their official
 sources and recreate the layout. Full source links, licenses, and per-dataset statistics are in
 [DATASETS.md](./DATASETS.md).
@@ -253,10 +315,10 @@ authors of every dataset and foundation model we build on.
 ## 📖 Citation
 
 ```bibtex
-@article{jo2026cop,
+@inproceedings{jo2026cop,
   title     = {One Click per Cell Type Suffices: Training-free Group Interaction for Cell Instance Segmentation},
   author    = {Jo, Sanghyun and Lee, Seo Jin and Hong, Seohyung and Gang, Yoorim and Kim, Hyeongsub and Seo, Hyungseok and Kim, Kyungsu},
-  journal   = {arXiv preprint arXiv:2605.29429},
+  booktitle = {Asian Conference on Computer Vision (ACCV)},
   year      = {2026}
 }
 ```
@@ -273,4 +335,5 @@ permission. For commercial licensing, please contact **both**:
 
 The vendored Segment Anything model code under `core/sam` and the SAM 3 weights are
 governed by Meta's [SAM License](https://ai.meta.com/sam). Datasets follow their original
-licenses (see [DATASETS.md](./DATASETS.md)).
+licenses (see [DATASETS.md](./DATASETS.md)). The logos under `hero_gif/logos` belong to their
+institutions and are not covered by this license.

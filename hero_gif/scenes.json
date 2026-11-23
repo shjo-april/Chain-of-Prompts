@@ -1,0 +1,39 @@
+{
+ "badges": [
+  "ACCV 2026 Oral",
+  "NeurIPSW 2026 Spotlight"
+ ],
+ "summary_site": "H&E and Non-H&E · same clicks without CoP give near-zero AJI · clicking every cell recovers it only with far more clicks",
+ "summary_note": "H&E: paper Fig. 2 demo clicks · Non-H&E: paper click rule, seed 3 (central cell); {n_seeds} seeds give AJI {seed_lo:.2f}–{seed_hi:.2f} (mean {seed_mean:.2f})",
+ "scenes": [
+  {
+   "key": "CoNSeP__test_2",
+   "img": "examples/CoNSeP_test_2.png",
+   "gt": "data_H@E_typed/CoNSeP/test/mask_instance/test_2.png",
+   "clicks": [[292, 395], [171, 539], [684, 958]],
+   "tab": "H&E · CoNSeP test_2",
+   "lead": "H&E-stained · CoNSeP test_2 (paper Fig. 2) · 245 cells",
+   "right_sub": "1 click per cell type",
+   "labels": [
+    "on inflammatory",
+    "on fibroblast",
+    "on endothelial"
+   ],
+   "note": "CoP clicks = demo clicks of paper Fig. 2 · per-cell clicks at ground-truth centroids in ground-truth order (paper upper-bound protocol)"
+  },
+  {
+   "key": "LIVECell__SKOV3_Phase_F4_1_01d00h00m_3",
+   "img": "data_non-H@E_untyped/LIVECell/test/image/SKOV3_Phase_F4_1_01d00h00m_3.png",
+   "gt": "data_non-H@E_untyped/LIVECell/test/mask_instance/SKOV3_Phase_F4_1_01d00h00m_3.png",
+   "clicks": [[351, 309]],
+   "seed_clicks": [[11, 136], [608, 273], [315, 93], [351, 309], [371, 472], [562, 83], [194, 338], [631, 247], [36, 489], [431, 81]],
+   "tab": "Non-H&E · LIVECell SKOV3",
+   "lead": "Label-free phase contrast · LIVECell SKOV3 · 87 cells",
+   "right_sub": "1 click per image",
+   "labels": [
+    "on a cell"
+   ],
+   "note": "CoP click = paper protocol, seed 3 (central cell); {n_seeds} click seeds give AJI {seed_lo:.2f}–{seed_hi:.2f} (mean {seed_mean:.2f}) · per-cell clicks at GT centroids in GT order"
+  }
+ ]
+}
