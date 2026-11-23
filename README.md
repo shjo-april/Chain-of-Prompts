@@ -3,7 +3,7 @@
 # One Click per Cell Type Suffices: Training-free Group Interaction for Cell Instance Segmentation
 
 <a href="https://accv2026.org/conference-program/#oral-8"><img src="https://img.shields.io/badge/ACCV%202026-Oral-c8102e?style=for-the-badge" height="36" alt="ACCV 2026: Oral"></a>
-<a href="https://asci.artificialintelligencepathology.org/"><img src="https://img.shields.io/badge/NeurIPS%202026%20Workshop%20ASCI-Spotlight-c8102e?style=for-the-badge" height="36" alt="NeurIPS 2026 Workshop ASCI: Spotlight"></a>
+<a href="https://asci.artificialintelligencepathology.org/#asci-spotlights"><img src="https://img.shields.io/badge/NeurIPS%202026%20Workshop%20ASCI-Spotlight-c8102e?style=for-the-badge" height="36" alt="NeurIPS 2026 Workshop ASCI: Spotlight"></a>
 
 **ACCV 2026 Oral**: one of 36 oral papers, an estimated top 3% of submissions<br>
 **NeurIPS 2026 Workshop ASCI Spotlight**: one of 10 spotlight talks, non-archival
@@ -30,7 +30,7 @@
 > IDs run up to 1417 (36 / 1417 ≈ 2.5%).
 >
 > **NeurIPS 2026 Workshop ASCI (Spotlight, non-archival).** The same paper was also selected as
-> one of 10 **Spotlight** talks at NeurIPS 2026 Workshop ASCI, [AI at Scale for Clinical Impact: Cancer Pathology Foundation Models](https://asci.artificialintelligencepathology.org/).
+> one of 10 **Spotlight** talks at NeurIPS 2026 Workshop ASCI, [AI at Scale for Clinical Impact: Cancer Pathology Foundation Models](https://asci.artificialintelligencepathology.org/#asci-spotlights).
 > This workshop version is **non-archival**: it is not included in the workshop proceedings, so
 > please cite the ACCV 2026 paper.
 
