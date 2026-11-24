@@ -15,7 +15,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2605.29429-b31b1b?style=for-the-badge)](https://arxiv.org/abs/2605.29429)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-8c1b13?style=for-the-badge)](./LICENSE)
 
-[Sanghyun Jo](https://shjo-april.github.io/)<sup>1,2</sup>, Seo Jin Lee<sup>1</sup>, Seohyung Hong<sup>1</sup>, Yoorim Gang<sup>1</sup>, [Hyeongsub Kim](https://sites.google.com/view/hyeongsub/)<sup>1,3</sup>, Hyungseok Seo<sup>1†</sup>, [Kyungsu Kim](https://aibl.snu.ac.kr/team/pi-information)<sup>1†</sup>
+[Sanghyun Jo](https://shjo-april.github.io/)<sup>1,2</sup>, Seo Jin Lee<sup>1</sup>, Seohyung Hong<sup>1</sup>, Yoorim Gang<sup>1</sup>, [Hyeongsub Kim](https://sites.google.com/view/hyeongsub/)<sup>1,3</sup>, Hyungseok Seo<sup>1†</sup>, [Kyungsu Kim](https://aibl.snu.ac.kr/pi-information)<sup>1†</sup>
 
 <sup>1</sup>Seoul National University &nbsp; <sup>2</sup>OGQ &nbsp; <sup>3</sup>LG CNS &nbsp; <sup>†</sup>Corresponding authors
 
